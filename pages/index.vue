@@ -2,33 +2,40 @@
   <div class="container">
     <div>
       <Logo />
-      <h1 class="title">
-        vue_practice_front
-      </h1>
+      <h1 class="title">vue_practice_front</h1>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
           target="_blank"
           rel="noopener noreferrer"
           class="button--green"
+          >Documentation</a
         >
-          Documentation
-        </a>
         <a
           href="https://github.com/nuxt/nuxt.js"
           target="_blank"
           rel="noopener noreferrer"
           class="button--grey"
+          >GitHub</a
         >
-          GitHub
-        </a>
+        {{ healthCheck }}
       </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      healthCheck: null,
+    };
+  },
+  async created() {
+    const res = await this.$axios.get('http://localhost:4000/health_check');
+    this.healthCheck = res.data.messege;
+  },
+};
 </script>
 
 <style>
